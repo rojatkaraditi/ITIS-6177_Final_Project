@@ -31,7 +31,7 @@ app.use(expressValidator({
     }
 }));
 
-var port = 3000;
+var port = 4000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
 var accessKey = "c433209098f7458ca1c1d76c44070b86";
