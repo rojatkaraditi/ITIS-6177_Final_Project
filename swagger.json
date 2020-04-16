@@ -1,0 +1,1056 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Video Search Application",
+        "description": "Application to search videos, video details and trending videos"
+    },
+  "host": "64.225.24.123:3000",
+  "basePath": "/api/v1.0",
+  "tags": [ 
+      {
+        "name": "Video Search",
+        "description": "Search videos, video details and trending videos using Bing Video Search API"
+      }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/videos/search":{
+        "get":{
+            "description" : "Search videos using various query parameters. This endpoint will search videos based on you searchQuery and other parameters entered.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "summary":"Search videos using a search query and various other parameters",
+            "parameters":[
+                {
+                    "name": "searchQuery",
+                    "in": "query",
+                    "required": true,
+                    "description": "Enter the video search query (what videos you are looking for). <br><br>The search query cannot be empty.",
+                    "type": "string"
+                },
+                {
+                    "name": "count",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the number of videos to return in the response. <br><br>The actual number delivered may be less than requested. The default is 35. The maximum is 105.",
+                    "type": "integer"
+                },
+                {
+                    "name": "offset",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the zero-based offset that indicates the number of videos to skip before returning videos. <br><br>The default is 0. Use this parameter along with the count parameter. <br>For example, if you want to display 20 videos per page, set count to 20 and offset to 0 to get the first page of results. For each subsequent page, increment offset by 20 (for example, 0, 20, 40).",
+                    "type": "integer"
+                },
+                {
+                    "name": "market",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the market from where you want the results to come from. <br><br>Typically the market should be the country from where the user is making the request, but it also can be another country. <br><br>Select market values only from the below list",
+                    "type": "string",
+                    "enum" : [
+                        "Spanish-Argentina",
+                        "English-Australia",
+                        "German-Austria",
+                        "Dutch-Belgium",
+                        "French-Belgium",
+                        "Portuguese-Brazil",
+                        "English-Canada",
+                        "French-Canada",
+                        "Spanish-Chile",
+                        "Danish-Denmark",
+                        "Finnish-Finland",
+                        "French-France",
+                        "German-Germany",
+                        "Traditional Chinese-Hong Kong SAR",
+                        "English-India",
+                        "English-Indonesia",
+                        "Italian-Italy",
+                        "Japanese-Japan",
+                        "Korean-Korea",
+                        "English-Malaysia",
+                        "Spanish-Mexico",
+                        "Dutch-Netherlands",
+                        "English-New Zealand",
+                        "Chinese-People's republic of China",
+                        "Polish-Poland",
+                        "Portuguese-Portugal",
+                        "English-Republic of the Philippines",
+                        "Russian-Russia",
+                        "Arabic-Saudi Arabia",
+                        "English-South Africa",
+                        "Spanish-Spain",
+                        "Swedish-Sweden",
+                        "French-Switzerland",
+                        "German-Switzerland",
+                        "Traditional Chinese-Taiwan",
+                        "Turkish-Turkey",
+                        "English-United Kingdom",
+                        "English-United States",
+                        "Spanish-United States"
+                    ]
+                },
+                {
+                    "name" : "setLanguage",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the language you would like to set for user interface display. <br><br>It is preferred that you always set the language value.<br> Typically the value is set to the same language specified by the market value, unless you would like to display the user interface strings in a different language.<br>If the entered language is not valid or is not supported, then English language will be used by default.<br><br> Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Arabic",
+                        "Basque",
+                        "Bengali",
+                        "Bulgarian",
+                        "Catalan",
+                        "Chinese (Simplified)",
+                        "Chinese (Traditional)",
+                        "Croatian",
+                        "Czech",
+                        "Danish",
+                        "Dutch",
+                        "English",
+                        "English-United Kingdom",
+                        "Estonian",
+                        "Finnish",
+                        "French",
+                        "Galician",
+                        "German",
+                        "Gujarati",
+                        "Hebrew",
+                        "Hindi",
+                        "Hungarian",
+                        "Icelandic",
+                        "Italian",
+                        "Japanese",
+                        "Kannada",
+                        "Korean",
+                        "Latvian",
+                        "Lithuanian",
+                        "Malay",
+                        "Malayalam",
+                        "Marathi",
+                        "Norwegian (Bokmal)",
+                        "Polish",
+                        "Portuguese (Brazil)",
+                        "Portuguese (Portugal)",
+                        "Punjabi",
+                        "Romanian",
+                        "Russian",
+                        "Serbian (Cyrylic)",
+                        "Slovak",
+                        "Slovenian",
+                        "Spanish",
+                        "Swedish",
+                        "Tamil",
+                        "Telugu",
+                        "Thai",
+                        "Turkish",
+                        "Ukrainian",
+                        "Vietnamese"
+                    ]
+                },
+                {
+                    "name" : "safeSearch",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter preference for filtering videos for adult content. Select values only from the below list",
+                    "type": "string",
+                    "enum": ["Moderate","Strict"]
+                },
+                {
+                    "name" : "aspectRatio",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos by following aspect ratio.<br><br> standard—Return videos with standard aspect radio<br>widescreen—Returns videos with wide screen aspect radio.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "standard",
+                        "widescreen"
+                    ]
+                },
+                {
+                    "name" : "embedded",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos that are embedded by the following case.<br><br> player—Returns videos with embeddable player<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "player"
+                    ]
+                },
+                {
+                    "name" : "freshness",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos by the date and time that they were discovered by Bing. Following are the available filters.<br><br> Day—Return videos discovered within the last 24 hours<br>Week—Return videos discovered within the last 7 days<br>Month—Return videos discovered within the last 30 days<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Day",
+                        "Week",
+                        "Month"
+                    ]
+                },
+                {
+                    "name" : "resolution",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos by the resolution. Following are the available resolution filters.<br><br> lowerthan_360p—Return videos with lower than 360p resolution<br>360p—Return videos with a 360p or higher resolution<br>480p—Return videos with a 480p or higher resolution<br>720p—Return videos with a 720p or higher resolution<br>1080p—Return videos with a 1080p or higher resolution<br>All—Do not filter by resolution. Specifying this value is the same as not specifying the resolution parameter.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "lowerthan_360p",
+                        "360p",
+                        "480p",
+                        "720p",
+                        "1080p",
+                        "All"
+                    ]
+                },
+                {
+                    "name" : "videoLength",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos by length. Following are the available videoLength filter.<br><br>Short—Return videos that are less than 5 minutes<br>Medium—Return videos that are between 5 and 20 minutes, inclusive<br>Long—Return videos that are longer than 20 minutes<br>All—Do not filter by length. Specifying this value is the same as not specifying the videoLength parameter.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Short",
+                        "Medium",
+                        "Long",
+                        "All"
+                    ]
+                },
+                {
+                    "name" : "pricing",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter value to filter the videos by pricing options. Following are the pricing options.<br><br> Free—Return videos that are free to view<br>Paid—Return videos that require a subscription or payment to view<br>All—Do not filter by pricing. Specifying this value is the same as not specifying the pricing parameter.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Free",
+                        "Paid",
+                        "All"
+                    ]
+                },
+                {
+                    "name": "textDecorations",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify if you want to display strings containing decoration markers such as hit highlighting characters.<br><br>If set to true, the strings may include markers.<br>Default value is false",
+                    "type": "boolean"
+                },
+                {
+                    "name": "textFormat",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify the type of marker to use for text decorations. Following are the marker values<br><br>Raw—Use Unicode characters to mark content that needs special formatting.<br>HTML—Use HTML tags to mark content that needs special formatting.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum":[
+                        "Raw",
+                        "HTML"
+                    ]
+                }
+            ],
+            "tags": [
+                "Video Search"
+            ],
+            "responses":{
+                "200":{
+                    "description" : "Success. Videos found. <br><br>1. The `value` array parameter holds the list of found videos for given searchQuery and other passed query parameters<br>2. The `queryExpansions` spec holds a list of expanded queries that narrows the original query. For instance, if the searchQuery were Adele+Songs, then the expaneded queries could be Adele Songs Grammy, Adele Sad Songs, etc.<br>3. The `pivotSuggestions` spec hold a list of pivots that segment the original searchQuery. For instance, if the searchQuery was Adele Songs, one of the segments or pivot could be <b>Adele</b> and this pivot may contain query suggestions like Adele life history or Adele Grammy Speech. The other pivot could be <b>songs</b> having query suggestions like 10 top hit songs of 2020, etc",
+                    "schema": {
+                        "$ref": "#/definitions/searchResponse"
+                      }
+                },
+                "400":{
+                    "description" : "One of the query parameters is missing or not valid."
+                },
+                "401":{
+                    "description" : "The subscription key is missing or is not valid to call Bing Video Search API."
+                },
+                "403":{
+                    "description" : "The user is authenticated, but they don’t have permission to the requested resource of Binge Video Search API."
+                },
+                "404":{
+                    "description" : "Resource Not Found"
+                },
+                "410":{
+                    "description" : "The request used HTTP instead of the HTTPS protocol to call the Bing Video Search API. HTTPS is the only supported protocol by Bing Video Search API."
+                },
+                "429":{
+                    "description" : "The caller exceeded their queries per second quota for Bing Video Search API."
+                },
+                "500":{
+                    "description" : "Unexpected server error."
+                }
+            }
+          }
+      },
+      "/videos/details":{
+          "get":{
+            "description":"Fetch different video details like video results and related videos for a video ID.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "summary" : "Fetch various video details using a video ID and various other parameters.",
+            "parameters" : [
+                {
+                    "name": "videoId",
+                    "in": "query",
+                    "required": true,
+                    "description": "Enter the video ID to uniquely identify the video. <br><br>This parameter is required to identify the video to get insights of. <br>The Video object's `videoId` field contains the ID that you set this parameter.<br><br>Example of videoId: 5A79D2E7E6896F8C881B5A79D2E7E6896F8C881B",
+                    "type": "string"
+                },
+                {
+                    "name": "modules",
+                    "in": "query",
+                    "required": true,
+                    "description": "Enter the list of insights you would like to request for the specified video. <br><br>This parameter value should be a comma separated list of one or more values from the following list<br><br> All—Return all available insights.<br>RelatedVideos—Return a list of videos that are similar to the video specified by the `videoId` query parameter.<br>VideoResult—Return the video details of the video specified in the `videoId`query parameter.<br><br>You may select multiple values from the below list. <br><br>NOTE: Please do not select any other value if you select the `All` option.<br>Please press command/control and then click on list items to select multiple values from the below list input",
+                    "type": "array",
+                    "collectionFormat" : "csv",
+                    "items": {
+                        "type": "string",
+                        "enum" :[
+                            "All",
+                            "RelatedVideos",
+                            "VideoResult"
+                        ]
+                    }
+                },
+                {
+                    "name": "searchQuery",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the video search query (what videos you are looking for) <br><br>Althought this parameter is not mandatory here, it is prefered that you always specify it because it helps to improve relevance and the results.",
+                    "type": "string"
+                },
+                {
+                    "name": "count",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the number of videos to return in the response. <br><br>The actual number delivered may be less than requested. The default is 35. The maximum is 105.",
+                    "type": "integer"
+                },
+                {
+                    "name": "offset",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the zero-based offset that indicates the number of videos to skip before returning videos. <br><br>The default is 0. Use this parameter along with the count parameter. <br>For example, if you want to display 20 videos per page, set count to 20 and offset to 0 to get the first page of results. For each subsequent page, increment offset by 20 (for example, 0, 20, 40).",
+                    "type": "integer"
+                },
+                {
+                    "name": "market",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the market from where you want the results to come from. <br><br>Typically the market should be the country from where the user is making the request, but it also can be another country. <br><br>Select market values only from the below list",
+                    "type": "string",
+                    "enum" : [
+                        "Spanish-Argentina",
+                        "English-Australia",
+                        "German-Austria",
+                        "Dutch-Belgium",
+                        "French-Belgium",
+                        "Portuguese-Brazil",
+                        "English-Canada",
+                        "French-Canada",
+                        "Spanish-Chile",
+                        "Danish-Denmark",
+                        "Finnish-Finland",
+                        "French-France",
+                        "German-Germany",
+                        "Traditional Chinese-Hong Kong SAR",
+                        "English-India",
+                        "English-Indonesia",
+                        "Italian-Italy",
+                        "Japanese-Japan",
+                        "Korean-Korea",
+                        "English-Malaysia",
+                        "Spanish-Mexico",
+                        "Dutch-Netherlands",
+                        "English-New Zealand",
+                        "Chinese-People's republic of China",
+                        "Polish-Poland",
+                        "Portuguese-Portugal",
+                        "English-Republic of the Philippines",
+                        "Russian-Russia",
+                        "Arabic-Saudi Arabia",
+                        "English-South Africa",
+                        "Spanish-Spain",
+                        "Swedish-Sweden",
+                        "French-Switzerland",
+                        "German-Switzerland",
+                        "Traditional Chinese-Taiwan",
+                        "Turkish-Turkey",
+                        "English-United Kingdom",
+                        "English-United States",
+                        "Spanish-United States"
+                    ]
+                },
+                {
+                    "name" : "setLanguage",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the language you would like to set for user interface display. <br><br>It is preferred that you always set the language value.<br> Typically the value is set to the same language specified by the market value, unless you would like to display the user interface strings in a different language.<br>If the entered language is not valid or is not supported, then English language will be used by default.<br><br> Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Arabic",
+                        "Basque",
+                        "Bengali",
+                        "Bulgarian",
+                        "Catalan",
+                        "Chinese (Simplified)",
+                        "Chinese (Traditional)",
+                        "Croatian",
+                        "Czech",
+                        "Danish",
+                        "Dutch",
+                        "English",
+                        "English-United Kingdom",
+                        "Estonian",
+                        "Finnish",
+                        "French",
+                        "Galician",
+                        "German",
+                        "Gujarati",
+                        "Hebrew",
+                        "Hindi",
+                        "Hungarian",
+                        "Icelandic",
+                        "Italian",
+                        "Japanese",
+                        "Kannada",
+                        "Korean",
+                        "Latvian",
+                        "Lithuanian",
+                        "Malay",
+                        "Malayalam",
+                        "Marathi",
+                        "Norwegian (Bokmal)",
+                        "Polish",
+                        "Portuguese (Brazil)",
+                        "Portuguese (Portugal)",
+                        "Punjabi",
+                        "Romanian",
+                        "Russian",
+                        "Serbian (Cyrylic)",
+                        "Slovak",
+                        "Slovenian",
+                        "Spanish",
+                        "Swedish",
+                        "Tamil",
+                        "Telugu",
+                        "Thai",
+                        "Turkish",
+                        "Ukrainian",
+                        "Vietnamese"
+                    ]
+                },
+                {
+                    "name" : "safeSearch",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter preference for filtering videos for adult content. Select values only from the below list",
+                    "type": "string",
+                    "enum": ["Moderate","Strict"]
+                },
+                {
+                    "name": "textDecorations",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify if you want to display strings containing decoration markers such as hit highlighting characters.<br><br>If set to true, the strings may include markers.<br>Default value is false",
+                    "type": "boolean"
+                },
+                {
+                    "name": "textFormat",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify the type of marker to use for text decorations. Following are the marker values<br><br>Raw—Use Unicode characters to mark content that needs special formatting.<br>HTML—Use HTML tags to mark content that needs special formatting.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum":[
+                        "Raw",
+                        "HTML"
+                    ]
+                }
+            ],
+            "tags": [
+                "Video Search"
+            ],
+            "responses":{
+                "200":{
+                    "description" : "Success. Video(s) found. <br>1. The `relatedVideos` spec holds the list of videos related to the video specified in the videoId.<br>2. The `videoResult` spec holds information details of the video specified in the videoId<br><br> NOTE: If there is not data available for the requested insight, then the respective object will not be returned in the response. <br>For example, if the requested insight is `RelatedVideos` and no data is available for that insight for specified video, then the `relatedVideos` object will not be returned in the response",
+                    "schema": {
+                        "$ref": "#/definitions/detailsResponse"
+                      }
+                },
+                "400":{
+                    "description" : "One of the query parameters is missing or not valid."
+                },
+                "401":{
+                    "description" : "The subscription key is missing or is not valid to call Bing Video Search API."
+                },
+                "403":{
+                    "description" : "The user is authenticated, but they don’t have permission to the requested resource of Binge Video Search API."
+                },
+                "404":{
+                    "description" : "Resource Not Found"
+                },
+                "410":{
+                    "description" : "The request used HTTP instead of the HTTPS protocol to call the Bing Video Search API. HTTPS is the only supported protocol by Bing Video Search API."
+                },
+                "429":{
+                    "description" : "The caller exceeded their queries per second quota for Bing Video Search API."
+                },
+                "500":{
+                    "description" : "Unexpected server error."
+                }
+            }
+          }
+      },
+      "/videos/trending":{
+          "get":{
+            "description":"Fetch videos that are trending based on search requests made by other users. The videos are broken out into different categories. For example, Top Music Videos.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "summary" : "Fetch videos that are trending based on search requests made by other users.",
+            "parameters":[
+                {
+                    "name": "market",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the market from where you want the results to come from. <br><br>Typically the market should be the country from where the user is making the request, but it also can be another country. <br><br>Select market values only from the below list",
+                    "type": "string",
+                    "enum" : [
+                        "English-Australia",
+                        "English-Canada",
+                        "English-Great Britain",
+                        "English-Indonesia",
+                        "English-Ireland",
+                        "English-India",
+                        "English-New Zealand",
+                        "English-Philippines",
+                        "English-Singapore",
+                        "English-United States",
+                        "English-Worldwide aggregate code",
+                        "English-South Africa",
+                        "Chinese-China"
+                    ]
+                },
+                {
+                    "name" : "setLanguage",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter the language you would like to set for user interface display. <br><br>It is preferred that you always set the language value.<br> Typically the value is set to the same language specified by the market value, unless you would like to display the user interface strings in a different language.<br>If the entered language is not valid or is not supported, then English language will be used by default.<br><br> Select values only from the below list",
+                    "type": "string",
+                    "enum": [
+                        "Arabic",
+                        "Basque",
+                        "Bengali",
+                        "Bulgarian",
+                        "Catalan",
+                        "Chinese (Simplified)",
+                        "Chinese (Traditional)",
+                        "Croatian",
+                        "Czech",
+                        "Danish",
+                        "Dutch",
+                        "English",
+                        "English-United Kingdom",
+                        "Estonian",
+                        "Finnish",
+                        "French",
+                        "Galician",
+                        "German",
+                        "Gujarati",
+                        "Hebrew",
+                        "Hindi",
+                        "Hungarian",
+                        "Icelandic",
+                        "Italian",
+                        "Japanese",
+                        "Kannada",
+                        "Korean",
+                        "Latvian",
+                        "Lithuanian",
+                        "Malay",
+                        "Malayalam",
+                        "Marathi",
+                        "Norwegian (Bokmal)",
+                        "Polish",
+                        "Portuguese (Brazil)",
+                        "Portuguese (Portugal)",
+                        "Punjabi",
+                        "Romanian",
+                        "Russian",
+                        "Serbian (Cyrylic)",
+                        "Slovak",
+                        "Slovenian",
+                        "Spanish",
+                        "Swedish",
+                        "Tamil",
+                        "Telugu",
+                        "Thai",
+                        "Turkish",
+                        "Ukrainian",
+                        "Vietnamese"
+                    ]
+                },
+                {
+                    "name" : "safeSearch",
+                    "in": "query",
+                    "required": false,
+                    "description": "Enter preference for filtering videos for adult content. Select values only from the below list",
+                    "type": "string",
+                    "enum": ["Moderate","Strict"]
+                },
+                {
+                    "name": "textDecorations",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify if you want to display strings containing decoration markers such as hit highlighting characters.<br><br>If set to true, the strings may include markers.<br>Default value is false",
+                    "type": "boolean"
+                },
+                {
+                    "name": "textFormat",
+                    "in": "query",
+                    "required": false,
+                    "description": "Specify the type of marker to use for text decorations. Following are the marker values<br><br>Raw—Use Unicode characters to mark content that needs special formatting.<br>HTML—Use HTML tags to mark content that needs special formatting.<br><br>Select values only from the below list",
+                    "type": "string",
+                    "enum":[
+                        "Raw",
+                        "HTML"
+                    ]
+                }
+            ],
+            "tags": [
+                "Video Search"
+            ],
+            "responses":{
+                "200":{
+                    "description" : "Success. Trending Video(s) found. <br>1. The `bannerTiles` spec holds the most popular trending videos which can come from one or more categories.<br>2. The `categories` spec holds trending videos listed by category and subcategory",
+                    "schema": {
+                        "$ref": "#/definitions/trendingResponse"
+                      }
+                },
+                "400":{
+                    "description" : "One of the query parameters is missing or not valid."
+                },
+                "401":{
+                    "description" : "The subscription key is missing or is not valid to call Bing Video Search API."
+                },
+                "403":{
+                    "description" : "The user is authenticated, but they don’t have permission to the requested resource of Binge Video Search API."
+                },
+                "404":{
+                    "description" : "Resource Not Found"
+                },
+                "410":{
+                    "description" : "The request used HTTP instead of the HTTPS protocol to call the Bing Video Search API. HTTPS is the only supported protocol by Bing Video Search API."
+                },
+                "429":{
+                    "description" : "The caller exceeded their queries per second quota for Bing Video Search API."
+                },
+                "500":{
+                    "description" : "Unexpected server error."
+                }
+            }
+          }
+      }
+  },
+  "definitions":{
+      "instrumentation":{
+          "properties":{
+              "_type":{
+                  "type":"string"
+              }
+          }
+      },
+      "queryContext":{
+          "properties":{
+              "originalQuery":{
+                  "type":"string"
+              },
+              "alterationDisplayQuery":{
+                  "type":"string"
+              },
+              "alterationOverrideQuery":{
+                  "type":"string"
+              },
+              "alterationMethod":{
+                  "type":"string"
+              },
+              "alterationType":{
+                  "type":"string"
+              }
+          }
+      },
+      "publisher":{
+          "properties":{
+              "name":{
+                  "type":"string"
+              }
+          }
+      },
+      "creator":{
+        "properties":{
+            "name":{
+                "type":"string"
+            }
+        }
+      },
+      "thumbnail":{
+          "properties":{
+              "width":{
+                  "type":"integer"
+              },
+              "height":{
+                  "type":"integer"
+              }
+          }
+      },
+      "thumbnailUrl":{
+          "properties":{
+              "thumbnailUrl":{
+                  "type":"string"
+              }
+          }
+      },
+      "linksInfo":{
+          "properties":{
+              "method":{
+                  "type":"string"
+              },
+              "href":{
+                  "type":"string"
+              }
+          }
+      },
+      "video":{
+          "properties":{
+              "webSearchUrl":{
+                  "type":"string"
+              },
+              "name":{
+                  "type":"string"
+              },
+              "description":{
+                  "type":"string"
+              },
+              "thumbnailUrl":{
+                  "type":"string"
+              },
+              "datePublished":{
+                  "type":"string"
+              },
+              "publisher":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/publisher"
+                  }
+              },
+              "creator":{
+                  "type":"object",
+                  "$ref":"#/definitions/creator"
+              },
+              "isAccessibleForFree":{
+                  "type":"boolean"
+              },
+              "isFamilyFriendly":{
+                  "type":"boolean"
+              },
+              "contentUrl":{
+                  "type":"string"
+              },
+              "hostPageUrl":{
+                  "type":"string"
+              },
+              "encodingFormat":{
+                  "type":"string"
+              },
+              "hostPageDisplayUrl":{
+                  "type":"string"
+              },
+              "width":{
+                  "type":"integer"
+              },
+              "height":{
+                  "type":"integer"
+              },
+              "duration":{
+                  "type":"string"
+              },
+              "motionThumbnailUrl":{
+                  "type":"string"
+              },
+              "embedHtml":{
+                  "type":"string"
+              },
+              "allowHttpsEmbed":{
+                  "type":"string"
+              },
+              "viewCount":{
+                  "type":"integer"
+              },
+              "thumbnail":{
+                  "type":"object",
+                  "$ref":"#/definitions/thumbnail"
+              },
+              "videoId":{
+                  "type":"string"
+              },
+              "allowMobileEmbed":{
+                  "type":"boolean"
+              },
+              "isSuperfresh":{
+                  "type":"boolean"
+              }
+          }
+      },
+      "query":{
+          "properties":{
+              "text":{
+                  "type":"string"
+              },
+              "displayText":{
+                  "type":"string"
+              },
+              "webSearchUrl":{
+                  "type":"string"
+              },
+              "searchLink":{
+                  "type":"string"
+              },
+              "thumbnail":{
+                  "type":"object",
+                  "$ref":"#/definitions/thumbnailUrl"
+              }
+          }
+      },
+      "pivotSuggestions":{
+          "properties":{
+              "pivot":{
+                  "type":"string"
+              },
+              "suggestions":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/query"
+                  }
+              }
+          }
+      },
+      "results":{
+          "properties":{
+              "_type":{
+                  "type":"string"
+              },
+              "instrumentation":{
+                  "type":"object",
+                  "$ref":"#/definitions/instrumentation"
+              },
+              "readLink":{
+                  "type":"string"
+              },
+              "webSearchUrl":{
+                  "type":"string"
+              },
+              "queryContext":{
+                  "type":"object",
+                  "$ref":"#/definitions/queryContext"
+              },
+              "totalEstimatedMatches":{
+                  "type":"integer"
+              },
+              "value":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/video"
+                  }
+              },
+              "nextOffset":{
+                  "type":"integer"
+              },
+              "queryExpansions":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/query"
+                  }
+              },
+              "pivotSuggestions":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/pivotSuggestions"
+                  }
+              },
+              "relatedSearches":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/query"
+                  }
+              },
+              "currentOffset":{
+                  "type":"integer"
+              }
+          }
+      },
+      "searchResponse":{
+          "properties":{
+              "results":{
+                "type":"object",
+                "$ref":"#/definitions/results"
+              },
+              "links":{
+                "type":"array",
+                "items":{
+                    "$ref":"#/definitions/linksInfo"
+                }
+            }
+          }
+      },
+      "relatedVideos":{
+          "properties":{
+              "value":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/video"
+                  }
+              }
+          }
+      },
+      "detailsResults":{
+          "properties":{
+              "_type":{
+                  "type":"string"
+              },
+              "instrumentation":{
+                  "type":"object",
+                  "$ref":"#/definitions/instrumentation"
+              },
+              "relatedVideos":{
+                  "type":"object",
+                  "$ref":"#/definitions/relatedVideos"
+              },
+              "videoResult":{
+                  "type":"object",
+                  "$ref":"#/definitions/video"
+              }
+          }
+      },
+      "detailsResponse":{
+          "properties":{
+              "results":{
+                  "type":"object",
+                  "$ref":"#/definitions/detailsResults"
+              },
+              "links":{
+                "type":"array",
+                "items":{
+                    "$ref":"#/definitions/linksInfo"
+                }
+            }
+          }
+      },
+      "trendingQuery":{
+          "properties":{
+              "text":{
+                  "type":"string"
+              },
+              "displayText":{
+                  "type":"string"
+              },
+              "webSearchUrl":{
+                  "type":"string"
+              }
+          }
+      },
+      "image":{
+          "properties":{
+              "description":{
+                  "type":"string"
+              },
+              "thumbnailUrl":{
+                  "type":"string"
+              },
+              "headLine":{
+                  "type":"string"
+              },
+              "contentUrl":{
+                  "type":"string"
+              }
+          }
+      },
+      "trendingVideo":{
+          "properties":{
+              "query":{
+                  "type":"object",
+                  "$ref":"#/definitions/trendingQuery"
+              },
+              "image":{
+                  "type":"object",
+                  "$ref":"#/definitions/image"
+              }
+          }
+      },
+      "subcategories":{
+          "properties":{
+              "tiles":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/trendingVideo"
+                  }
+              },
+              "title":{
+                  "type":"string"
+              }
+          }
+      },
+      "categories":{
+          "properties":{
+              "title":{
+                  "type":"string"
+              },
+              "subcategories":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/subcategories"
+                  }
+              }
+          }
+      },
+      "trendingResults":{
+          "properties":{
+              "_type":{
+                  "type":"string"
+              },
+              "instrumentation":{
+                  "type":"object",
+                  "$ref":"#/definitions/instrumentation"
+              },
+              "bannerTiles":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/trendingVideo"
+                  }
+              },
+              "categories":{
+                  "type":"array",
+                  "items":{
+                      "$ref":"#/definitions/categories"
+                  }
+              }
+          }
+      },
+      "trendingResponse":{
+          "properties":{
+              "results":{
+                  "type":"object",
+                  "$ref":"#/definitions/trendingResults"
+              },
+              "links":{
+                "type":"array",
+                "items":{
+                    "$ref":"#/definitions/linksInfo"
+                }
+            }
+          }
+      }
+  }
+}
