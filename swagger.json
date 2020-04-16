@@ -32,7 +32,7 @@
                     "name": "searchQuery",
                     "in": "query",
                     "required": true,
-                    "description": "Enter the video search query (what videos you are looking for). <br><br>The search query cannot be empty.",
+                    "description": "Enter the video search query (what videos you are looking for). <br><br>The search query cannot be empty. This is a <b>required field</b>",
                     "type": "string"
                 },
                 {
@@ -299,14 +299,14 @@
                     "name": "videoId",
                     "in": "query",
                     "required": true,
-                    "description": "Enter the video ID to uniquely identify the video. <br><br>This parameter is required to identify the video to get insights of. <br>The Video object's `videoId` field contains the ID that you set this parameter.<br><br>Example of videoId: 5A79D2E7E6896F8C881B5A79D2E7E6896F8C881B",
+                    "description": "Enter the video ID to uniquely identify the video. <br><br>This parameter is a <b>required field</b> and is used to identify the video to get insights of. <br>The Video object's `videoId` field contains the ID that you set this parameter.<br><br>Example of videoId: 5A79D2E7E6896F8C881B5A79D2E7E6896F8C881B",
                     "type": "string"
                 },
                 {
                     "name": "modules",
                     "in": "query",
                     "required": true,
-                    "description": "Enter the list of insights you would like to request for the specified video. <br><br>This parameter value should be a comma separated list of one or more values from the following list<br><br> All—Return all available insights.<br>RelatedVideos—Return a list of videos that are similar to the video specified by the `videoId` query parameter.<br>VideoResult—Return the video details of the video specified in the `videoId`query parameter.<br><br>You may select multiple values from the below list. <br><br>NOTE: Please do not select any other value if you select the `All` option.<br>Please press command/control and then click on list items to select multiple values from the below list input",
+                    "description": "Enter the list of insights you would like to request for the specified video. This is a <b>required field</b> <br><br>This parameter value should be a comma separated list of one or more values from the following list<br><br> All—Return all available insights.<br>RelatedVideos—Return a list of videos that are similar to the video specified by the `videoId` query parameter.<br>VideoResult—Return the video details of the video specified in the `videoId`query parameter.<br><br>You may select multiple values from the below list. <br><br>NOTE: Please do not select any other value if you select the `All` option.<br>Please press command/control and then click on list items to select multiple values from the below list input",
                     "type": "array",
                     "collectionFormat" : "csv",
                     "items": {
