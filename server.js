@@ -31,7 +31,7 @@ app.use(expressValidator({
     }
 }));
 
-var port = 4000;
+var port = 3000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
 var accessKey = "c433209098f7458ca1c1d76c44070b86";
@@ -315,15 +315,15 @@ getLinks=()=>{
     var links = [
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:4000/api/v1.0/videos/search"
+            "href" : "http://64.225.24.123:3000/api/v1.0/videos/search"
         },
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:4000/api/v1.0/videos/details"
+            "href" : "http://64.225.24.123:3000/api/v1.0/videos/details"
         },
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:4000/api/v1.0/videos/trending"
+            "href" : "http://64.225.24.123:3000/api/v1.0/videos/trending"
         }
     ];
     return links;
