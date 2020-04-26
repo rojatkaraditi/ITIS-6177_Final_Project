@@ -25,7 +25,7 @@
   "paths": {
     "/videos/search":{
         "get":{
-            "description" : "Search videos using various query parameters. This endpoint will search videos based on you searchQuery and other parameters entered.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "description" : "Search videos using various query parameters. This endpoint will search videos based on your searchQuery and other parameters entered.<br><br>**All query parameter values having fixed options are case-sensitive",
             "summary":"Search videos using a search query and various other parameters",
             "parameters":[
                 {

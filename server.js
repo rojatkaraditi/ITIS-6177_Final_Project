@@ -34,7 +34,7 @@ app.use(expressValidator({
 var port = 3000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
-var accessKey = "c433209098f7458ca1c1d76c44070b86";
+const accessKey = "c433209098f7458ca1c1d76c44070b86";
 var baseUrl = "https://aditi-rojatkar.cognitiveservices.azure.com/bing/v7.0/videos";
 
 let requestHeader = {
