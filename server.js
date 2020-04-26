@@ -127,11 +127,12 @@ app.get(url+'/search',(request,response)=>{
             };
             response.status(resp.status).json(result);
         }).catch(error=>{
-            var result = {
-                'errors' : error,
-                'links':getLinks()
-            };
-            response.status(error.response.status).json(result);
+            // var result = {
+            //     'errors' : error.response.data,
+            //     'links':getLinks()
+            // };
+            // response.status(error.response.status).json(result);
+            console.log(error)
         });
     }
     else{
