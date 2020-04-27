@@ -39,6 +39,7 @@ app.use(expressValidator({
     }
 }));
 
+var ip = "45.55.61.84";
 var port = 3000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
@@ -295,6 +296,11 @@ app.get(url+'/details',(request,response)=>{
         var url = baseUrl+'/details'+queryParams;
         axios.get(encodeURI(url),requestHeader).then(resp=>{
 
+            var result = resp.data;
+
+            var  relatedVideos = [];
+            var videoResult = {};
+
             var result = {
                 'results' : resp.data,
                 'links':getLinks()
@@ -410,15 +416,15 @@ getLinks=()=>{
     var links = [
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:3000/api/v1.0/videos/search"
+            "href" : "http://"+ip+":3000/api/v1.0/videos/search"
         },
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:3000/api/v1.0/videos/details"
+            "href" : "http://"+ip+":3000/api/v1.0/videos/details"
         },
         {
             "method" : "get",
-            "href" : "http://64.225.24.123:3000/api/v1.0/videos/trending"
+            "href" : "http://"+ip+":3000/api/v1.0/videos/trending"
         }
     ];
     return links;

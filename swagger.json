@@ -5,7 +5,7 @@
         "title": "Video Search Application",
         "description": "Application to search videos, video details and trending videos"
     },
-  "host": "64.225.24.123:3000",
+  "host": "45.55.61.84:3000",
   "basePath": "/api/v1.0",
   "tags": [ 
       {
