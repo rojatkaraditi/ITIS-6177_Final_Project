@@ -52,8 +52,7 @@ var baseUrl = "https://aditi-rojatkar.cognitiveservices.azure.com/bing/v7.0/vide
 let requestHeader = {
     headers:{
         'Accept' : 'application/json',
-        'Ocp-Apim-Subscription-Key' : accessKey,
-        'User-Agent' : 'axios'
+        'Ocp-Apim-Subscription-Key' : accessKey
     }
 };
 
@@ -477,13 +476,7 @@ app.get(url+'/trending',(request,response)=>{
     if(!errors){
         var url = baseUrl+'/trending'+queryParams;
         //make call to azure to fetch data
-         //axios.get(encodeURI(url),requestHeader).then(resp=>{
-            axios({
-                method :'get',
-                url : encodeURI(url),
-                headers : requestHeader.headers,
-                family : 4
-            }).then(resp => {
+        axios.get(encodeURI(url),requestHeader).then(resp=>{
             //data transformation
             var result = resp.data;
 
