@@ -1,3 +1,5 @@
+//file for defining constants
+
 exports.markets = {
     'Spanish-Argentina' : 'es-AR',
     'English-Australia' : 'en-AU',

@@ -18,6 +18,8 @@ var PivotSuggestion = require('./PivotSuggestion');
 
 app = express();
 
+
+//defining middleware
 app.use('/api.videosearch.docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -39,6 +41,7 @@ app.use(expressValidator({
     }
 }));
 
+//defining required values
 var ip = "45.55.61.84";
 var port = 3000;
 var version = "v1.0";
@@ -52,9 +55,12 @@ let requestHeader = {
     }
 };
 
+//endpoint to get videos by search query and other paramaters
 app.get(url+'/search',(request,response)=>{
     var queryString = request.query;
     var queryParams = '';
+
+    //input sanitization and validation
 
     request.checkQuery('searchQuery','Search query must be specified').notEmpty().trim().escape();
 
@@ -129,8 +135,10 @@ app.get(url+'/search',(request,response)=>{
 
     if(!errors){
         var url = baseUrl+'/search'+queryParams;
+        //making call to azure to fetch data
         axios.get(encodeURI(url),requestHeader).then(resp=>{
 
+            //data transformation
             var result = resp.data;
             var videoValues = [];
             var queryExpansions = [];
@@ -219,20 +227,26 @@ app.get(url+'/search',(request,response)=>{
                 'results' : res,
                 'links':getLinks()
             };
+
+            //send response
             response.status(resp.status).json(result);
         }).catch(error=>{
             if(error.response){
+                //data transformation
                 var result = {
                     'errors' : error.response.data,
                     'links':getLinks()
                 };
+                //send response
                 response.status(error.response.status).json(result);
             }
             else{
+                //data transformation
                 var result = {
                     'errors' : error,
                     'links':getLinks()
                 };
+                //send response
                 response.status(500).json(result);
             }
         });
@@ -243,7 +257,7 @@ app.get(url+'/search',(request,response)=>{
             'errors': errors,
             'links':getLinks()
         }
-        //response
+        //send response
         response.status(400).json(result);
     }
 });
@@ -252,6 +266,7 @@ app.get(url+'/details',(request,response)=>{
     var queryString = request.query;
     var queryParams = '';
 
+    //input sanitization and validation
     request.checkQuery('videoId','Video ID must be specified').notEmpty().trim().escape();
     request.checkQuery('modules','Modules must be specified').notEmpty().trim().escape();
     request.checkQuery('modules','Invalid modules values. Module values should be a comma separated list of values: '+constants.modules+'. If using \'All\' value, no other value must be specified in the list').isValidModules().trim().escape();
@@ -302,8 +317,10 @@ app.get(url+'/details',(request,response)=>{
 
     if(!errors){
         var url = baseUrl+'/details'+queryParams;
+        //make call to azure fetch video details
         axios.get(encodeURI(url),requestHeader).then(resp=>{
 
+            //data transformation
             var result = resp.data;
 
             var  videoValues = [];
@@ -366,20 +383,25 @@ app.get(url+'/details',(request,response)=>{
                 'results' : res,
                 'links':getLinks()
             };
+            //send response
             response.status(resp.status).json(result);
         }).catch(error=>{
             if(error.response){
+                //data transformation
                 var result = {
                     'errors' : error.response.data,
                     'links':getLinks()
                 };
+                //send response
                 response.status(error.response.status).json(result);
             }
             else{
+                //data transformation
                 var result = {
                     'errors' : error,
                     'links':getLinks()
                 };
+                //send response
                 response.status(500).json(result);
             }
         });
@@ -390,7 +412,7 @@ app.get(url+'/details',(request,response)=>{
             'errors': errors,
             'links':getLinks()
         }
-        //response
+        //send response
         response.status(400).json(result);
     }
 });
@@ -399,6 +421,7 @@ app.get(url+'/trending',(request,response)=>{
     var queryString = request.query;
     var queryParams = "";
 
+    //input sanitization and validation
     if(queryString.market){
         request.checkQuery('market','Market value is invalid. Valid options are: '+Object.keys(constants.trendingMarkets)).isValidTrendingMarket().trim(); 
         if(queryParams){
@@ -451,8 +474,10 @@ app.get(url+'/trending',(request,response)=>{
 
     if(!errors){
         var url = baseUrl+'/trending'+queryParams;
+        //make call to azure to fetch data
         axios.get(encodeURI(url),requestHeader).then(resp=>{
 
+            //data transformation
             var result = resp.data;
 
             var res = {
@@ -464,20 +489,25 @@ app.get(url+'/trending',(request,response)=>{
                 'results' : res,
                 'links':getLinks()
             };
+            //send result
             response.status(resp.status).json(result);
         }).catch(error=>{
             if(error.response){
+                //data transformation
                 var result = {
                     'errors' : error.response.data,
                     'links':getLinks()
                 };
+                //send response
                 response.status(error.response.status).json(result);
             }
             else{
+                //data transformation
                 var result = {
                     'errors' : error,
                     'links':getLinks()
                 };
+                //send response
                 response.status(500).json(result);
             }
         });
@@ -488,7 +518,7 @@ app.get(url+'/trending',(request,response)=>{
             'errors': errors,
             'links':getLinks()
         }
-        //response
+        //send response
         response.status(400).json(result);
     }
 
@@ -499,6 +529,7 @@ app.listen(port,()=>{
     console.log("Listening on port: "+port);
 });
 
+//getlinks function to support HATEOAS
 getLinks=()=>{
     var links = [
         {
