@@ -248,7 +248,6 @@ app.get(url+'/search',(request,response)=>{
                 };
                 //send response
                 response.status(500).json(result);
-                request.socket.close();
             }
         });
     }
