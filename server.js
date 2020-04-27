@@ -477,7 +477,13 @@ app.get(url+'/trending',(request,response)=>{
     if(!errors){
         var url = baseUrl+'/trending'+queryParams;
         //make call to azure to fetch data
-         axios.get(encodeURI(url),requestHeader).then(resp=>{
+         //axios.get(encodeURI(url),requestHeader).then(resp=>{
+            axios({
+                method :'get',
+                url : encodeURI(url),
+                headers : requestHeader.headers,
+                family : 4
+            }).then(resp => {
             //data transformation
             var result = resp.data;
 
