@@ -51,7 +51,9 @@ var baseUrl = "https://aditi-rojatkar.cognitiveservices.azure.com/bing/v7.0/vide
 
 let requestHeader = {
     headers:{
-        'Ocp-Apim-Subscription-Key' : accessKey
+        'Accept' : 'application/json',
+        'Ocp-Apim-Subscription-Key' : accessKey,
+        'User-Agent' : 'axios'
     }
 };
 
