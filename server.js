@@ -46,7 +46,7 @@ var ip = "45.55.61.84";
 var port = 3000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
-const accessKey = "c433209098f7458ca1c1d76c44070b86";
+const accessKey = "6827b1776a034334bdd820af9ae94e04";
 var baseUrl = "https://aditi-rojatkar.cognitiveservices.azure.com/bing/v7.0/videos";
 
 let requestHeader = {
