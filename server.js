@@ -54,8 +54,7 @@ let requestHeader = {
         'Accept' : 'application/json',
         'Ocp-Apim-Subscription-Key' : accessKey,
         'User-Agent' : 'axios'
-    },
-    family:4
+    }
 };
 
 //endpoint to get videos by search query and other paramaters
