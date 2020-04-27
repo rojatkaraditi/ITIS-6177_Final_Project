@@ -42,7 +42,7 @@ app.use(expressValidator({
 }));
 
 //defining required values
-var ip = "45.55.61.84";
+var ip = "138.197.107.126";
 var port = 3000;
 var version = "v1.0";
 var url = "/api/"+version+"/videos";
