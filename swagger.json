@@ -656,32 +656,6 @@
       }
   },
   "definitions":{
-      "instrumentation":{
-          "properties":{
-              "_type":{
-                  "type":"string"
-              }
-          }
-      },
-      "queryContext":{
-          "properties":{
-              "originalQuery":{
-                  "type":"string"
-              },
-              "alterationDisplayQuery":{
-                  "type":"string"
-              },
-              "alterationOverrideQuery":{
-                  "type":"string"
-              },
-              "alterationMethod":{
-                  "type":"string"
-              },
-              "alterationType":{
-                  "type":"string"
-              }
-          }
-      },
       "publisher":{
           "properties":{
               "name":{
@@ -896,7 +870,7 @@
       },
       "relatedVideos":{
           "properties":{
-              "value":{
+              "videos":{
                   "type":"array",
                   "items":{
                       "$ref":"#/definitions/video"
@@ -906,13 +880,6 @@
       },
       "detailsResults":{
           "properties":{
-              "_type":{
-                  "type":"string"
-              },
-              "instrumentation":{
-                  "type":"object",
-                  "$ref":"#/definitions/instrumentation"
-              },
               "relatedVideos":{
                   "type":"object",
                   "$ref":"#/definitions/relatedVideos"
@@ -1006,13 +973,6 @@
       },
       "trendingResults":{
           "properties":{
-              "_type":{
-                  "type":"string"
-              },
-              "instrumentation":{
-                  "type":"object",
-                  "$ref":"#/definitions/instrumentation"
-              },
               "bannerTiles":{
                   "type":"array",
                   "items":{

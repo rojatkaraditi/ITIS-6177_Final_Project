@@ -221,12 +221,20 @@ app.get(url+'/search',(request,response)=>{
             };
             response.status(resp.status).json(result);
         }).catch(error=>{
-            var result = {
-                'errors' : error.response.data,
-                'links':getLinks()
-            };
-            response.status(error.response.status).json(result);
-            //console.log(error);
+            if(error.response){
+                var result = {
+                    'errors' : error.response.data,
+                    'links':getLinks()
+                };
+                response.status(error.response.status).json(result);
+            }
+            else{
+                var result = {
+                    'errors' : error,
+                    'links':getLinks()
+                };
+                response.status(500).json(result);
+            }
         });
     }
     else{
@@ -298,20 +306,82 @@ app.get(url+'/details',(request,response)=>{
 
             var result = resp.data;
 
-            var  relatedVideos = [];
+            var  videoValues = [];
             var videoResult = {};
+            var res = {};
+
+            if(result.relatedVideos){
+                if(result.relatedVideos.value && result.relatedVideos.value.length>0){
+                    result.relatedVideos.value.forEach(video=>{
+                        var creator = {};
+                        var publisher = [];
+                        var thumbnail = {};
+                        if(video.creator){
+                            creator = new Creator(video.creator);
+                        }
+                        if(video.thumbnail){
+                            thumbnail = new Thumbnail(video.thumbnail);
+                        }
+                        if(video.publisher && video.publisher.length>0){
+                            video.publisher.forEach(pub => {
+                                var publish = new Publisher(pub);
+                                publisher.push(publish);
+                            });
+                        }
+                         
+                        var vid = new Video(video,creator,publisher,thumbnail);
+    
+                        videoValues.push(vid);
+    
+                    });
+
+                    var relatedVideoValues = {'videos':videoValues};
+                    res.relatedVideos = relatedVideoValues;
+                }
+            }
+
+            if(result.videoResult){
+                var video = result.videoResult;
+                var creator = {};
+                var publisher = [];
+                var thumbnail = {};
+                if(video.creator){
+                    creator = new Creator(video.creator);
+                }
+                if(video.thumbnail){
+                    thumbnail = new Thumbnail(video.thumbnail);
+                }
+                if(video.publisher && video.publisher.length>0){
+                    video.publisher.forEach(pub => {
+                        var publish = new Publisher(pub);
+                        publisher.push(publish);
+                    });
+                }
+                    
+                videoResult = new Video(video,creator,publisher,thumbnail);
+                res.videoResult = videoResult;
+            }
 
             var result = {
-                'results' : resp.data,
+                'results' : res,
                 'links':getLinks()
             };
             response.status(resp.status).json(result);
         }).catch(error=>{
-            var result = {
-                'errors' : error.response.data,
-                'links':getLinks()
-            };
-            response.status(error.response.status).json(result);
+            if(error.response){
+                var result = {
+                    'errors' : error.response.data,
+                    'links':getLinks()
+                };
+                response.status(error.response.status).json(result);
+            }
+            else{
+                var result = {
+                    'errors' : error,
+                    'links':getLinks()
+                };
+                response.status(500).json(result);
+            }
         });
     }
     else{
@@ -382,17 +452,34 @@ app.get(url+'/trending',(request,response)=>{
     if(!errors){
         var url = baseUrl+'/trending'+queryParams;
         axios.get(encodeURI(url),requestHeader).then(resp=>{
+
+            var result = resp.data;
+
+            var res = {
+                'bannerTiles' : result.bannerTiles,
+                'categories' : result.categories
+            };
+
             var result = {
-                'results' : resp.data,
+                'results' : res,
                 'links':getLinks()
             };
             response.status(resp.status).json(result);
         }).catch(error=>{
-            var result = {
-                'errors' : error.response.data,
-                'links':getLinks()
-            };
-            response.status(error.response.status).json(result);
+            if(error.response){
+                var result = {
+                    'errors' : error.response.data,
+                    'links':getLinks()
+                };
+                response.status(error.response.status).json(result);
+            }
+            else{
+                var result = {
+                    'errors' : error,
+                    'links':getLinks()
+                };
+                response.status(500).json(result);
+            }
         });
     }
     else{
