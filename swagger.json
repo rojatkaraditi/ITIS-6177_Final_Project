@@ -839,31 +839,23 @@
       },
       "results":{
           "properties":{
-              "_type":{
-                  "type":"string"
-              },
-              "instrumentation":{
-                  "type":"object",
-                  "$ref":"#/definitions/instrumentation"
-              },
-              "readLink":{
+              "azureReadLink":{
                   "type":"string"
               },
               "webSearchUrl":{
                   "type":"string"
               },
-              "queryContext":{
-                  "type":"object",
-                  "$ref":"#/definitions/queryContext"
-              },
               "totalEstimatedMatches":{
                   "type":"integer"
               },
-              "value":{
+              "videos":{
                   "type":"array",
                   "items":{
                       "$ref":"#/definitions/video"
                   }
+              },
+              "currentOffset":{
+                  "type":"integer"
               },
               "nextOffset":{
                   "type":"integer"
@@ -885,9 +877,6 @@
                   "items":{
                       "$ref":"#/definitions/query"
                   }
-              },
-              "currentOffset":{
-                  "type":"integer"
               }
           }
       },

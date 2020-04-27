@@ -5,8 +5,16 @@ const bodyParser = require("body-parser");
 var expressValidator = require('express-validator');
 var validator = require('./validator');
 var constants = require('./constants');
-swaggerUi = require('swagger-ui-express');
-swaggerDocument = require('./swagger.json');
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger.json');
+var Creator = require('./Creator');
+var Publisher = require('./Publisher');
+var Thumbnail = require('./Thumbnail');
+var Video = require('./Video');
+var ThumbnailUrlObj = require('./ThumbnailUrl');
+var QueryObj = require('./Query');
+var PivotSuggestion = require('./PivotSuggestion');
+
 
 app = express();
 
@@ -121,18 +129,103 @@ app.get(url+'/search',(request,response)=>{
     if(!errors){
         var url = baseUrl+'/search'+queryParams;
         axios.get(encodeURI(url),requestHeader).then(resp=>{
+
+            var result = resp.data;
+            var videoValues = [];
+            var queryExpansions = [];
+            var pivotSuggestions = [];
+            var relatedSearches = []; 
+
+            if(result.value && result.value.length>0){
+                result.value.forEach(video=>{
+                    var creator = {};
+                    var publisher = [];
+                    var thumbnail = {};
+                    if(video.creator){
+                        creator = new Creator(video.creator);
+                    }
+                    if(video.thumbnail){
+                        thumbnail = new Thumbnail(video.thumbnail);
+                    }
+                    if(video.publisher && video.publisher.length>0){
+                        video.publisher.forEach(pub => {
+                            var publish = new Publisher(pub);
+                            publisher.push(publish);
+                        });
+                    }
+                     
+                    var vid = new Video(video,creator,publisher,thumbnail);
+
+                    videoValues.push(vid);
+
+                });
+            }
+
+            if(result.queryExpansions && result.queryExpansions.length>0){
+                result.queryExpansions.forEach(query => {
+                    var thumbnailUrl = {};
+                    if(query.thumbnail){
+                        thumbnailUrl = new ThumbnailUrlObj(query.thumbnail);
+                    }
+                    var qObj = new QueryObj(query,thumbnailUrl);
+                    queryExpansions.push(qObj);
+                });
+            }
+
+            if(result.pivotSuggestions && result.pivotSuggestions.length>0){
+                result.pivotSuggestions.forEach(pivot=>{
+                    var suggestions = [];
+                    if(pivot.suggestions && pivot.suggestions.length>0){
+                        pivot.suggestions.forEach(suggestion => {
+                            var thumbnailUrl = {};
+                            if(suggestion.thumbnail){
+                                thumbnailUrl = new ThumbnailUrlObj(suggestion.thumbnail);
+                            }
+                            var qObj = new QueryObj(suggestion,thumbnailUrl);
+                            suggestions.push(qObj);
+                        });
+                    }
+                    
+                    var pivSuggestions = new PivotSuggestion(pivot.pivot,suggestions);
+                    pivotSuggestions.push(pivSuggestions);
+                });
+            }
+
+            if(result.relatedSearches && result.relatedSearches.length>0){
+                result.relatedSearches.forEach(query => {
+                    var thumbnailUrl = {};
+                    if(query.thumbnail){
+                        thumbnailUrl = new ThumbnailUrlObj(query.thumbnail);
+                    }
+                    var qObj = new QueryObj(query,thumbnailUrl);
+                    relatedSearches.push(qObj);
+                });
+            }
+
+            var res = {
+                'azureReadLink' : result.readLink,
+                'webSearchUrl' : result.webSearchUrl,
+                'totalEstimatedMatches' : result.totalEstimatedMatches,
+                'videos' : videoValues,
+                'currentOffset' : result.currentOffset,
+                'nextOffset' : result.nextOffset,
+                'queryExpansions' : queryExpansions,
+                'pivotSuggestions' : pivotSuggestions,
+                'relatedSearches' : relatedSearches
+            }
+            
             var result = {
-                'results' : resp.data,
+                'results' : res,
                 'links':getLinks()
             };
             response.status(resp.status).json(result);
         }).catch(error=>{
-            // var result = {
-            //     'errors' : error.response.data,
-            //     'links':getLinks()
-            // };
-            // response.status(error.response.status).json(result);
-            console.log(error)
+            var result = {
+                'errors' : error.response.data,
+                'links':getLinks()
+            };
+            response.status(error.response.status).json(result);
+            //console.log(error);
         });
     }
     else{
@@ -201,6 +294,7 @@ app.get(url+'/details',(request,response)=>{
     if(!errors){
         var url = baseUrl+'/details'+queryParams;
         axios.get(encodeURI(url),requestHeader).then(resp=>{
+
             var result = {
                 'results' : resp.data,
                 'links':getLinks()
