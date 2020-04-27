@@ -526,7 +526,7 @@ app.get(url+'/trending',(request,response)=>{
 
 });
 
-app.listen(port,"localhost",()=>{
+app.listen(port,ip,()=>{
     console.log("Listening on port: "+port);
 });
 
