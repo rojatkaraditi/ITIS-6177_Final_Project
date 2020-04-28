@@ -292,7 +292,7 @@
       },
       "/videos/details":{
           "get":{
-            "description":"Fetch different video details like video results and related videos for a `videoId`.<br><br>Based on the `videoId`, `modules` and other query parameters that you use, this API will make a call to the Bing Video Search API and will return in the response either the video details of the mentioned `videoId` or the list videos related to the mentioned `videoId` or both found by Bing. <br>Whether video details or list of related videos or both will be retruned will be decided based on the `modules` mentioned<br><br>**All query parameter values having fixed options are case-sensitive",
+            "description":"Fetch different video details like video results and related videos for a `videoId`.<br><br>Based on the `videoId`, `modules` and other query parameters that you use, this API will make a call to the Bing Video Search API and will return in the response either the video details of the mentioned `videoId` or the list videos related to the mentioned `videoId` or both found by Bing. <br>Whether video details or list of related videos or both will be retruned will be decided based on the `modules` mentioned<br><br><b>NOTE :</b> If the `videoId` query parameter does not match to any videoIds available to Bing, it may return the `videoResult` of a video that contains the mentioned `videoId` value as a substring in any of the fields of the `videoResult` object.<br><br>**All query parameter values having fixed options are case-sensitive",
             "summary" : "Fetch various video details using a video ID and various other parameters.",
             "parameters" : [
                 {
