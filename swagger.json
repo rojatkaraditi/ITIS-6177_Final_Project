@@ -25,7 +25,7 @@
   "paths": {
     "/videos/search":{
         "get":{
-            "description" : "Search videos using various query parameters. This endpoint will search videos based on your searchQuery and other parameters entered.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "description" : "Search videos using various query parameters. This endpoint will search videos based on your `searchQuery` and other parameters entered.<br><br>Based on what you search for using the `searchQuery` and other query paramater, this API will make a call to Bing Video Search API and will return you a response containing all the videos found by Bing for your search query<br><br>**All query parameter values having fixed options are case-sensitive",
             "summary":"Search videos using a search query and various other parameters",
             "parameters":[
                 {
@@ -292,7 +292,7 @@
       },
       "/videos/details":{
           "get":{
-            "description":"Fetch different video details like video results and related videos for a video ID.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "description":"Fetch different video details like video results and related videos for a `videoId`.<br><br>Based on the `videoId`, `modules` and other query parameters that you use, this API will make a call to the Bing Video Search API and will return in the response either the video details of the mentioned `videoId` or the list videos related to the mentioned `videoId` or both found by Bing. <br>Whether video details or list of related videos or both will be retruned will be decided based on the `modules` mentioned<br><br>**All query parameter values having fixed options are case-sensitive",
             "summary" : "Fetch various video details using a video ID and various other parameters.",
             "parameters" : [
                 {
@@ -509,7 +509,7 @@
       },
       "/videos/trending":{
           "get":{
-            "description":"Fetch videos that are trending based on search requests made by other users. The videos are broken out into different categories. For example, Top Music Videos.<br><br>**All query parameter values having fixed options are case-sensitive",
+            "description":"Fetch videos that are trending based on search requests made by other users. The videos are broken out into different categories. For example, Top Music Videos.<br><br>Based on the query parameters you mention (if any mentioned), this API will make a call to Bing Video Search API and will return in response the trending videos found by Bing for your query<br><br>**All query parameter values having fixed options are case-sensitive",
             "summary" : "Fetch videos that are trending based on search requests made by other users.",
             "parameters":[
                 {
